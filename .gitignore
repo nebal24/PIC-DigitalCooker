@@ -1,0 +1,10 @@
+build/
+dist/
+debug/
+nbproject/private/
+*.hex
+*.elf
+*.map
+*.lst
+*.o
+*.p1
