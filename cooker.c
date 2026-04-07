@@ -61,7 +61,7 @@
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
-#include <xc.h>
+
 
 
 /*
@@ -73,6 +73,8 @@
 
 
 #include <xc.h>
+#include "global.h"
+#include "interrupt_handlers.h"
 
 void setupPorts(void)
 {
@@ -101,6 +103,27 @@ void setupPorts(void)
 // Initial states
     PORTCbits.RC2 = 0;
     PORTCbits.RC5 = 0;
+}
+
+void setupINT0(void)
+{
+    INTCONbits.INT0IE = 0;    // disable INT0 first
+    INTCONbits.INT0IF = 0;    // clear old flag
+
+    INTCON2bits.INTEDG0 = 0;  // falling edge trigger
+
+    INTCONbits.INT0IE = 1;    // enable INT0
+    INTCONbits.GIE = 1;       // global interrupt enable
+}
+
+void __interrupt() highISR(void)
+{
+    if (INTCONbits.INT0IF)
+        INT0_ISR_Handler();
+}
+void __interrupt(low_priority) lowISR(void)
+{
+    
 }
 void main(void) {
     setupPorts();

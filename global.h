@@ -15,4 +15,6 @@ extern unsigned long cooking_time_seconds;
 
 extern unsigned char flag_1s;
 
+extern volatile unsigned char mode;
+
 #endif

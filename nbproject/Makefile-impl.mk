@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=PIC-DigitalCooker
+PROJECTNAME=DigitalControlledCooker.X
 
 # Active Configuration
 DEFAULTCONF=default

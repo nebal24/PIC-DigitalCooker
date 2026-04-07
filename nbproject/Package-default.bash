@@ -10,9 +10,9 @@ CND_CONF=default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/PIC-DigitalCooker.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=PIC-DigitalCooker.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=pic-digitalcooker/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/DigitalControlledCooker.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=DigitalControlledCooker.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=digitalcontrolledcooker.x/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/pic-digitalcooker/bin
+makeDirectory ${TMPDIR}/digitalcontrolledcooker.x/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/pic-digitalcooker.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/digitalcontrolledcooker.x.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/pic-digitalcooker.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/digitalcontrolledcooker.x.tar *
 checkReturnCode
 
 # Cleanup
