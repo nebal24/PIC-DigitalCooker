@@ -2,7 +2,7 @@
 // PIC18F4620 Configuration Bit Settings
 
 // 'C' source line config statements
-
+#define _XTAL_FREQ   4000000UL 
 // CONFIG1H
 #pragma config OSC = XT         // Oscillator Selection bits (XT oscillator)
 #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor Enable bit (Fail-Safe Clock Monitor disabled)
@@ -79,7 +79,7 @@
 void setupPorts(void)
 {
 //initialize ADCON1
-     ADCON1 = 0b00001100;
+     ADCON1 = 0x0D;
 //configure TRISX : direction
     //INPUTS 
     TRISBbits.TRISB0 = 1;  // INT0
