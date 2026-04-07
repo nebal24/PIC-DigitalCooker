@@ -7,11 +7,12 @@
       <itemPath>cooker.h</itemPath>
       <itemPath>lcd.h</itemPath>
       <itemPath>uart.h</itemPath>
-      <itemPath>adc.h</itemPath>
       <itemPath>timer0.h</itemPath>
       <itemPath>buttons.h</itemPath>
       <itemPath>delay.h</itemPath>
       <itemPath>global.h</itemPath>
+      <itemPath>adc.h</itemPath>
+      <itemPath>temperature.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -23,11 +24,12 @@
       <itemPath>cooker.c</itemPath>
       <itemPath>lcd.c</itemPath>
       <itemPath>uart.c</itemPath>
-      <itemPath>adc.c</itemPath>
       <itemPath>timer0.c</itemPath>
       <itemPath>buttons.c</itemPath>
       <itemPath>delay.c</itemPath>
       <itemPath>global.c</itemPath>
+      <itemPath>adc.c</itemPath>
+      <itemPath>temperature.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -35,6 +37,9 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
