@@ -74,6 +74,35 @@
 
 #include <xc.h>
 
+void setupPorts(void)
+{
+//initialize ADCON1
+     ADCON1 = 0b00001100;
+//configure TRISX : direction
+    //INPUTS 
+    TRISBbits.TRISB0 = 1;  // INT0
+    TRISBbits.TRISB1 = 1;  // INT1
+    TRISBbits.TRISB2 = 1;  // INT2
+    TRISBbits.TRISB3 = 1;  // increment
+    TRISBbits.TRISB4 = 1;  // decrement
+    TRISBbits.TRISB5 = 1;  // cancel
+    
+    TRISAbits.TRISA5 = 1;  // cooler button
+    
+    TRISCbits.TRISC7 = 1;  // RX
+    
+    //OUTPUTS
+    TRISCbits.TRISC2 = 0;  // cooler
+    TRISCbits.TRISC5 = 0;  // heater
+    
+    TRISCbits.TRISC6 = 0;  // TX
+    
+    
+// Initial states
+    PORTCbits.RC2 = 0;
+    PORTCbits.RC5 = 0;
+}
 void main(void) {
+    setupPorts();
     return;
 }
