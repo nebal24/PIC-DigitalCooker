@@ -11,10 +11,11 @@ extern unsigned char cooking_on;
 extern unsigned char heater_on;
 extern unsigned char cooler_on;
 
-extern unsigned long cooking_time_seconds;
+
 
 extern unsigned char flag_1s;
 
 extern volatile unsigned char mode;
+extern volatile unsigned long cookingTime;
 
 #endif

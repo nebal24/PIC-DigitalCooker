@@ -75,7 +75,10 @@
 #include <xc.h>
 #include "global.h"
 #include "interrupt_handlers.h"
-
+#include "lcd.h"
+#include <stdio.h>
+#include "buttons.h"
+#include "delay.h"
 void setupPorts(void)
 {
 //initialize ADCON1
@@ -103,29 +106,64 @@ void setupPorts(void)
 // Initial states
     PORTCbits.RC2 = 0;
     PORTCbits.RC5 = 0;
+
+
+TRISD = 0x00;              // LCD data bus on PORTD -> output
+TRISEbits.TRISE1 = 0;      // LCD E  -> output
+TRISEbits.TRISE2 = 0;      // LCD RS -> output
+
+PORTD = 0x00;
+PORTEbits.RE1 = 0;
+PORTEbits.RE2 = 0;
 }
 
-void setupINT0(void)
+
+
+
+const char* getModeText(void)
 {
-    INTCONbits.INT0IE = 0;    // disable INT0 first
-    INTCONbits.INT0IF = 0;    // clear old flag
-
-    INTCON2bits.INTEDG0 = 0;  // falling edge trigger
-
-    INTCONbits.INT0IE = 1;    // enable INT0
-    INTCONbits.GIE = 1;       // global interrupt enable
+    switch(mode)
+    {
+        case 0: return "MD:Sec        ";
+        case 1: return "MD:10Sec      ";
+        case 2: return "MD:Min        ";
+        case 3: return "MD:10Min      ";
+        case 4: return "MD:HR         ";
+        default: return "MD:Sec        ";
+    }
 }
-
-void __interrupt() highISR(void)
+void displayTime(void)
 {
-    if (INTCONbits.INT0IF)
-        INT0_ISR_Handler();
+    unsigned long temp;
+    unsigned int hours, minutes, seconds;
+    char buffer[17];
+
+    temp = cookingTime;
+
+    hours   = temp / 3600;
+    temp    = temp % 3600;
+    minutes = temp / 60;
+    seconds = temp % 60;
+
+    sprintf(buffer, "%01u:%02u:%02u", hours, minutes, seconds);
+
+    lcd_gotoxy(1, 1);
+    lcd_puts(buffer);
 }
-void __interrupt(low_priority) lowISR(void)
+void main(void)
 {
-    
-}
-void main(void) {
+    char line4[17];
+
     setupPorts();
-    return;
+    setupINT0();
+    lcd_init();
+
+    while(1)
+    {
+        handleIncrementButton();
+        handleDecrementButton();
+          displayTime();
+        lcd_gotoxy(1, 4);
+        lcd_puts(getModeText());
+    }
 }

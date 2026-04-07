@@ -11,12 +11,8 @@
       <itemPath>buttons.h</itemPath>
       <itemPath>delay.h</itemPath>
       <itemPath>global.h</itemPath>
-<<<<<<< HEAD
       <itemPath>interrupt_handlers.h</itemPath>
-=======
       <itemPath>adc.h</itemPath>
-      <itemPath>temperature.h</itemPath>
->>>>>>> 6daaed213b1e256bd864756163f8eef4c188a0b2
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -32,12 +28,8 @@
       <itemPath>buttons.c</itemPath>
       <itemPath>delay.c</itemPath>
       <itemPath>global.c</itemPath>
-<<<<<<< HEAD
       <itemPath>interrupt_handlers.c</itemPath>
-=======
       <itemPath>adc.c</itemPath>
-      <itemPath>temperature.c</itemPath>
->>>>>>> 6daaed213b1e256bd864756163f8eef4c188a0b2
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

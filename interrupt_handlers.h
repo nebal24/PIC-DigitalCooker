@@ -78,7 +78,7 @@ extern "C" {
 
 #ifndef INTERRUPT_HANDLERS_H
 #define INTERRUPT_HANDLERS_H
-
+void setupINT0(void);
 void INT0_ISR_Handler(void);
 
 

@@ -1,6 +1,6 @@
 
 #include "lcd.h"
-
+#include "delay.h"
 //unsigned char  LCD_INIT_STRING[4] = {(unsigned char)(0x20 |((unsigned char)LCD_TYPE << 2)), (unsigned char)0xc,(unsigned char)1, (unsigned char)6};
 
 unsigned char LCD_INIT_STRING[4] = {0x20 | (LCD_TYPE << 2), 0xc, 1, 6};
@@ -9,13 +9,13 @@ unsigned char LCD_INIT_STRING[4] = {0x20 | (LCD_TYPE << 2), 0xc, 1, 6};
 //#define lcd_output_enable(x) lcd.enable =x
 //#define lcd_output_rs(x) lcd.rs =x
 
-void delay_ms(unsigned int n) {
-    int x;
-    for (x = 0; x <= n; x++) {
-        __delaywdt_ms(1);
-        // __delay_ms(1);   // 20x10 200ms
-    }
-}
+//void delay_ms(unsigned int n) {
+//    int x;
+//    for (x = 0; x <= n; x++) {
+//        __delaywdt_ms(1);
+//        // __delay_ms(1);   // 20x10 200ms
+//    }
+//}
 
 void delay_cycles(unsigned char n) {
     int x;

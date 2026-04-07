@@ -76,3 +76,10 @@ extern "C" {
 
 #endif	/* XC_HEADER_TEMPLATE_H */
 
+#ifndef BUTTONS_H
+#define BUTTONS_H
+
+void handleIncrementButton(void);
+unsigned long getModeIncrement(void);
+void handleDecrementButton(void);
+#endif
