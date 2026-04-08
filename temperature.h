@@ -7,4 +7,9 @@
 float read_SP(void);      // read & scale potentiometer AN0 ? 0-200°C
 void  display_SP(void);   // display SP on LCD Line 3
 
+float read_CT(void);     // read sensor 
+void display_CT(void);   //display CT on LCD Line 2
+
+void control_heater(void);
+
 #endif
