@@ -9,7 +9,8 @@
 #include <xc.h>
 #include "global.h"
 #include "control.h"
-
+#include "delay.h"
+#define BUZZER PORTDbits.RD0
 void cancel_all(void)
 {
     cooking_on = 0;
@@ -32,4 +33,25 @@ void start_cooking(void)
 void stop_cooking(void)
 {
     cooking_on = 0;
+}
+
+void finish_cooking(void)
+{
+    cooking_on = 0;
+    heater_on = 0;
+
+    PORTCbits.RC5 = 0;   // Heater OFF
+    cooking_done_flag = 1;
+}
+
+void beep_buzzer(void)
+{
+    for (int i = 0; i < 5; i++)
+    {
+        BUZZER = 1;
+        delay_ms(1000);
+
+        BUZZER = 0;
+        delay_ms(1000);
+    }
 }

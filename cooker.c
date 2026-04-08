@@ -82,6 +82,7 @@
 #include "control.h"
 #include "uart.h"
 #include "temperature.h"
+#include "timer0.h"
 void setupPorts(void)
 {
 //initialize ADCON1
@@ -162,7 +163,8 @@ void main(void)
     setupINT1();
     setupINT2();
     lcd_init();
-
+    setupTimer0();
+    
     while(1)
     {
         check_cancel_button();
@@ -175,8 +177,13 @@ void main(void)
         displayTime();
         display_CT();
         
-        
+         if (cooking_done_flag)
+    {
+        cooking_done_flag = 0;   
+        beep_buzzer();           
+    }
         lcd_gotoxy(1, 4);
         lcd_puts(getModeText());
     }
 }
+

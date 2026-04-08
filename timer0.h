@@ -76,3 +76,10 @@ extern "C" {
 
 #endif	/* XC_HEADER_TEMPLATE_H */
 
+#ifndef TIMER0_H
+#define TIMER0_H
+
+void setupTimer0(void);
+void reloadTimer0(void);
+
+#endif

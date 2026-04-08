@@ -20,4 +20,5 @@ extern volatile unsigned long cookingTime;
 
 void cancel_all(void);
 
+extern unsigned char cooking_done_flag;
 #endif
