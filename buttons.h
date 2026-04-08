@@ -82,4 +82,5 @@ extern "C" {
 void handleIncrementButton(void);
 unsigned long getModeIncrement(void);
 void handleDecrementButton(void);
+void check_cancel_button(void);
 #endif

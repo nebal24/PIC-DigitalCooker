@@ -11,6 +11,7 @@
 #include "global.h"
 #include "delay.h"
 #include "lcd.h"
+#include "control.h"
 unsigned long getModeIncrement(void)
 {
     switch(mode)
@@ -112,4 +113,17 @@ void handleDecrementButton(void)
     }
 
     lastState = currentState;
+}
+void check_cancel_button(void)
+{
+    if (PORTBbits.RB5 == 0)
+    {
+        __delay_ms(20);
+
+        if (PORTBbits.RB5 == 0)
+        {
+            cancel_all();
+            while (PORTBbits.RB5 == 0);
+        }
+    }
 }

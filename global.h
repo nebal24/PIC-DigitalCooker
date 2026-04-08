@@ -18,4 +18,6 @@ extern unsigned char flag_1s;
 extern volatile unsigned char mode;
 extern volatile unsigned long cookingTime;
 
+void cancel_all(void);
+
 #endif

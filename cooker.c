@@ -79,6 +79,9 @@
 #include <stdio.h>
 #include "buttons.h"
 #include "delay.h"
+#include "control.h"
+#include "uart.h"
+
 void setupPorts(void)
 {
 //initialize ADCON1
@@ -160,6 +163,9 @@ void main(void)
 
     while(1)
     {
+        check_cancel_button();
+        uart_check_cancel();
+        
         handleIncrementButton();
         handleDecrementButton();
           displayTime();

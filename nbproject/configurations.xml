@@ -13,6 +13,7 @@
       <itemPath>global.h</itemPath>
       <itemPath>interrupt_handlers.h</itemPath>
       <itemPath>adc.h</itemPath>
+      <itemPath>control.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -30,6 +31,7 @@
       <itemPath>global.c</itemPath>
       <itemPath>interrupt_handlers.c</itemPath>
       <itemPath>adc.c</itemPath>
+      <itemPath>control.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
