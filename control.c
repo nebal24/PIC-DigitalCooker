@@ -10,7 +10,7 @@
 #include "global.h"
 #include "control.h"
 #include "delay.h"
-#define BUZZER PORTDbits.RD0
+#define BUZZER PORTCbits.RC1
 void cancel_all(void)
 {
     cooking_on = 0;

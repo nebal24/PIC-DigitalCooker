@@ -86,7 +86,7 @@
 void setupPorts(void)
 {
 //initialize ADCON1
-     ADCON1 = 0x0D;
+     ADCON1 = 0x0C;
 //configure TRISX : direction
     //INPUTS 
     TRISBbits.TRISB0 = 1;  // INT0
@@ -119,6 +119,9 @@ TRISEbits.TRISE2 = 0;      // LCD RS -> output
 PORTD = 0x00;
 PORTEbits.RE1 = 0;
 PORTEbits.RE2 = 0;
+
+TRISCbits.TRISC1 = 0;
+PORTCbits.RC1 = 0;
 }
 
 
@@ -128,12 +131,12 @@ const char* getModeText(void)
 {
     switch(mode)
     {
-        case 0: return "MD:Sec        ";
-        case 1: return "MD:10Sec      ";
-        case 2: return "MD:Min        ";
-        case 3: return "MD:10Min      ";
-        case 4: return "MD:HR         ";
-        default: return "MD:Sec        ";
+        case 0: return "MD:Sec";
+        case 1: return "MD:10Sec";
+        case 2: return "MD:Min";
+        case 3: return "MD:10Min";
+        case 4: return "MD:HR";
+        default: return "MD:Sec";
     }
 }
 void displayTime(void)
@@ -156,34 +159,37 @@ void displayTime(void)
 }
 void main(void)
 {
-    char line4[17];
-
     setupPorts();
     setupINT0();
     setupINT1();
     setupINT2();
-    lcd_init();
     setupTimer0();
-    
+    lcd_init();
+    init_adc();
+
     while(1)
     {
         check_cancel_button();
         uart_check_cancel();
-        
+
         handleIncrementButton();
         handleDecrementButton();
-        
-        
-        displayTime();
+        handleCoolerButton();
+
+        read_SP();       // update set point
+        display_SP();
+
+        read_CT();       // update current temp
         display_CT();
-        
-         if (cooking_done_flag)
-    {
-        cooking_done_flag = 0;   
-        beep_buzzer();           
-    }
-        lcd_gotoxy(1, 4);
-        lcd_puts(getModeText());
+
+        displayTime();
+        display_MD_CL(getModeText());
+
+        if (cooking_done_flag)
+        {
+            cooking_done_flag = 0;
+            beep_buzzer();
+        }
     }
 }
 

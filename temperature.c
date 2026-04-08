@@ -53,3 +53,11 @@ void control_heater(void)
     }
     // else ? No Change
 }
+
+void display_MD_CL(const char* modeText) 
+{
+    char buf[17];
+     sprintf(buf, "%-10sCL:%s", modeText, cooler_on ? "ON " : "OFF");
+    lcd_gotoxy(1, 4);
+    lcd_puts(buf);
+}
