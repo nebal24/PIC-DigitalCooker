@@ -82,6 +82,7 @@
 #include "control.h"
 #include "uart.h"
 #include "temperature.h"
+#include "adc.h"
 void setupPorts(void)
 {
 //initialize ADCON1
@@ -163,11 +164,16 @@ void main(void)
     setupINT2();
     lcd_init();
     init_adc();
+    setupSerial();
+    
+    SP = 100;
+    CT = 97;
+    cooking_on =1;
 
     while(1)
     {
         check_cancel_button();
-        uart_check_cancel();
+         uart_handle_commands(); 
         
         handleIncrementButton();
         handleDecrementButton();
@@ -176,9 +182,10 @@ void main(void)
         displayTime();      
         display_MD_CL(getModeText());
         
-        read_SP();       // updates global SP
+        //read_SP();       // updates global SP
         display_SP();    // shows on line 3
-        read_CT();       // updates global SP
+       // read_CT();       // updates global SP
         display_CT();    // shows on line 3
+        control_heater();
     }
 }
