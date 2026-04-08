@@ -83,6 +83,8 @@
 #include "uart.h"
 #include "temperature.h"
 #include "adc.h"
+#include "timer0.h"
+
 void setupPorts(void)
 {
 //initialize ADCON1
@@ -119,6 +121,9 @@ TRISEbits.TRISE2 = 0;      // LCD RS -> output
 PORTD = 0x00;
 PORTEbits.RE1 = 0;
 PORTEbits.RE2 = 0;
+
+TRISCbits.TRISC1 = 0;
+PORTCbits.RC1 = 0;
 }
 
 
@@ -156,12 +161,11 @@ void displayTime(void)
 }
 void main(void)
 {
-    char line4[17];
-
     setupPorts();
     setupINT0();
     setupINT1();
     setupINT2();
+    setupTimer0();
     lcd_init();
     init_adc();
     setupSerial();
@@ -174,12 +178,11 @@ void main(void)
     {
         check_cancel_button();
          uart_handle_commands(); 
-        
         handleIncrementButton();
         handleDecrementButton();
-        handleCoolerButton(); 
-        
-        displayTime();      
+        handleCoolerButton();
+
+        displayTime();
         display_MD_CL(getModeText());
         
         //read_SP();       // updates global SP
@@ -187,5 +190,13 @@ void main(void)
        // read_CT();       // updates global SP
         display_CT();    // shows on line 3
         control_heater();
+
+        if (cooking_done_flag)
+        {
+            cooking_done_flag = 0;
+            beep_buzzer();
+        }
+
     }
 }
+

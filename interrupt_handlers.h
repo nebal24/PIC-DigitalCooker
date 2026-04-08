@@ -85,4 +85,5 @@ void setupINT2(void);
 void INT0_ISR_Handler(void);
 void INT1_ISR_Handler(void);
 void INT2_ISR_Handler(void);
+void TMR0_ISR_Handler(void);
 #endif

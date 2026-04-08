@@ -11,11 +11,15 @@
 #include "global.h"
 #include "interrupt_handlers.h"
 #include "control.h"
+#include "timer0.h"
 #define _XTAL_FREQ 4000000UL
 
 
 void __interrupt() highISR(void)
 {
+    if (INTCONbits.TMR0IF)
+        TMR0_ISR_Handler();
+    
     if (INTCONbits.INT0IF)
         INT0_ISR_Handler();
     
@@ -109,4 +113,22 @@ void INT2_ISR_Handler(void)
     }
 
     INTCON3bits.INT2IF = 0;
+}
+
+void TMR0_ISR_Handler(void)
+{
+    reloadTimer0();
+    INTCONbits.TMR0IF = 0;
+
+    flag_1s = 1;
+
+    if (cooking_on && cookingTime > 0)
+    {
+        cookingTime--;
+
+        if (cookingTime == 0)
+        {
+            finish_cooking();
+        }
+    }
 }

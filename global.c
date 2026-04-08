@@ -13,3 +13,5 @@ unsigned char flag_1s = 0;
 
 volatile unsigned char mode = 0;   // 0=Sec, 1=10Sec, 2=Min, 3=10Min, 4=HR
 volatile unsigned long cookingTime = 0;
+
+volatile unsigned char cooking_done_flag = 0;
