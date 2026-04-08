@@ -12,4 +12,6 @@ void display_CT(void);   //display CT on LCD Line 2
 
 void control_heater(void);
 
+void display_MD_CL(const char* modeText);
+
 #endif

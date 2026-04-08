@@ -83,4 +83,5 @@ void handleIncrementButton(void);
 unsigned long getModeIncrement(void);
 void handleDecrementButton(void);
 void check_cancel_button(void);
+void handleCoolerButton(void);
 #endif

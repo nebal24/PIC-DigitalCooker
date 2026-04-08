@@ -127,3 +127,24 @@ void check_cancel_button(void)
         }
     }
 }
+
+void handleCoolerButton(void) 
+{
+    if (PORTAbits.RA5 == 0) 
+    {
+        delay_ms(150);                        // debounce
+        
+        if (cooler_on == 0) {
+            cooler_on = 1;
+            PORTCbits.RC2 = 1;   // cooler ON
+            heater_on = 0;
+            cooking_on = 0;
+            PORTCbits.RC5 = 0;   // heater OFF
+        } else {
+            cooler_on = 0;
+            PORTCbits.RC2 = 0;   // cooler OFF
+        }
+        
+        while(PORTAbits.RA5 == 0) {CLRWDT();}  // wait release
+    }
+}

@@ -85,7 +85,7 @@
 void setupPorts(void)
 {
 //initialize ADCON1
-     ADCON1 = 0x0D;
+     ADCON1 = 0x0C;
 //configure TRISX : direction
     //INPUTS 
     TRISBbits.TRISB0 = 1;  // INT0
@@ -127,12 +127,12 @@ const char* getModeText(void)
 {
     switch(mode)
     {
-        case 0: return "MD:Sec        ";
-        case 1: return "MD:10Sec      ";
-        case 2: return "MD:Min        ";
-        case 3: return "MD:10Min      ";
-        case 4: return "MD:HR         ";
-        default: return "MD:Sec        ";
+        case 0: return "MD:Sec";
+        case 1: return "MD:10Sec";
+        case 2: return "MD:Min";
+        case 3: return "MD:10Min";
+        case 4: return "MD:HR";
+        default: return "MD:Sec";
     }
 }
 void displayTime(void)
@@ -162,6 +162,7 @@ void main(void)
     setupINT1();
     setupINT2();
     lcd_init();
+    init_adc();
 
     while(1)
     {
@@ -170,13 +171,14 @@ void main(void)
         
         handleIncrementButton();
         handleDecrementButton();
+        handleCoolerButton(); 
         
+        displayTime();      
+        display_MD_CL(getModeText());
         
-        displayTime();
-        display_CT();
-        
-        
-        lcd_gotoxy(1, 4);
-        lcd_puts(getModeText());
+        read_SP();       // updates global SP
+        display_SP();    // shows on line 3
+        read_CT();       // updates global SP
+        display_CT();    // shows on line 3
     }
 }
