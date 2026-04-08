@@ -2,5 +2,6 @@
 #define CONTROL_H
 
 void cancel_all(void);
-
+void start_cooking(void);
+void stop_cooking(void);
 #endif

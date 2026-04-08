@@ -10,6 +10,7 @@
 #include <xc.h>
 #include "global.h"
 #include "interrupt_handlers.h"
+#include "control.h"
 #define _XTAL_FREQ 4000000UL
 
 
@@ -17,6 +18,12 @@ void __interrupt() highISR(void)
 {
     if (INTCONbits.INT0IF)
         INT0_ISR_Handler();
+    
+    if (INTCON3bits.INT1IF)
+        INT1_ISR_Handler();
+    
+     if (INTCON3bits.INT2IF)
+        INT2_ISR_Handler();
 }
 void __interrupt(low_priority) lowISR(void)
 {
@@ -51,4 +58,55 @@ void INT0_ISR_Handler(void)
     }
 
     INTCONbits.INT0IF = 0;
+}
+
+
+void setupINT1(void)
+{
+    INTCON3bits.INT1IE = 0;    // disable first
+    INTCON3bits.INT1IF = 0;    // clear old flag
+
+    INTCON2bits.INTEDG1 = 0;   // falling edge trigger
+
+    INTCON3bits.INT1IE = 1;    // enable INT1
+    INTCONbits.GIE = 1;        // global interrupt enable
+}
+
+void INT1_ISR_Handler(void)
+{
+    __delay_ms(120);
+
+    if (PORTBbits.RB1 == 0)
+    {
+        start_cooking();
+
+        while (PORTBbits.RB1 == 0);
+    }
+
+    INTCON3bits.INT1IF = 0;
+}
+
+void setupINT2(void)
+{
+    INTCON3bits.INT2IE = 0;
+    INTCON3bits.INT2IF = 0;
+
+    INTCON2bits.INTEDG2 = 0;   // falling edge
+
+    INTCON3bits.INT2IE = 1;
+    INTCONbits.GIE = 1;
+}
+
+void INT2_ISR_Handler(void)
+{
+    __delay_ms(120);
+
+    if (PORTBbits.RB2 == 0)
+    {
+        stop_cooking();
+
+        while (PORTBbits.RB2 == 0);
+    }
+
+    INTCON3bits.INT2IF = 0;
 }

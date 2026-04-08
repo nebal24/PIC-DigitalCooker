@@ -81,7 +81,7 @@
 #include "delay.h"
 #include "control.h"
 #include "uart.h"
-
+#include "temperature.h"
 void setupPorts(void)
 {
 //initialize ADCON1
@@ -159,6 +159,8 @@ void main(void)
 
     setupPorts();
     setupINT0();
+    setupINT1();
+    setupINT2();
     lcd_init();
 
     while(1)
@@ -168,7 +170,12 @@ void main(void)
         
         handleIncrementButton();
         handleDecrementButton();
-          displayTime();
+        
+        
+        displayTime();
+        display_CT();
+        
+        
         lcd_gotoxy(1, 4);
         lcd_puts(getModeText());
     }
