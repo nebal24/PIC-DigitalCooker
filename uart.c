@@ -1,6 +1,7 @@
 #include "uart.h"
 #include "global.h"
 #include "control.h"
+#include "display.h"
 #include <stdio.h> 
 
 // ??? SETUP ????????????????????????????????
@@ -60,40 +61,17 @@ void uart_handle_commands(void)
         {
             cancel_all();
         }
-        else if (ch == 't')
-        {
-            char buf[25];
-            send_string_no_lib((unsigned char*)"\r\n"); 
-            unsigned long temp = cookingTime;
-            unsigned int hours   = temp / 3600;
-            unsigned int minutes = (temp % 3600) / 60;
-            unsigned int seconds = temp % 60;
-            sprintf(buf, "Time: %02u:%02u:%02u\r\n", hours, minutes, seconds);
-            send_string_no_lib((unsigned char*)buf);
-        }
-        else if (ch == 's')
-        {
-            char buf[25];
-            send_string_no_lib((unsigned char*)"\r\n"); 
-            unsigned long temp = cookingTime;
-            unsigned int hours   = temp / 3600;
-            unsigned int minutes = (temp % 3600) / 60;
-            unsigned int seconds = temp % 60;
-            
-            sprintf(buf, "Time: %02u:%02u:%02u\r\n", hours, minutes, seconds);
-            send_string_no_lib((unsigned char*)buf);
-            
-            sprintf(buf, "CT:%5.1fC CK:%s\r\n", CT, cooking_on ? "ON" : "OFF");
-            send_string_no_lib((unsigned char*)buf);
-            
-            sprintf(buf, "SP:%5.1fC HT:%s\r\n", SP, heater_on ? "ON" : "OFF");
-            send_string_no_lib((unsigned char*)buf);
-            
-            sprintf(buf, "MD:%-6s CL:%s\r\n",
-                mode == 0 ? "Sec"   : mode == 1 ? "10Sec" :
-                mode == 2 ? "Min"   : mode == 3 ? "10Min" : "HR",
-                cooler_on ? "ON" : "OFF");
-            send_string_no_lib((unsigned char*)buf);
-        }
+        
+else if (ch == 't')
+{
+    send_string_no_lib((unsigned char*)"\r\n");
+    uart_display_time();
+}
+else if (ch == 's')
+{
+    send_string_no_lib((unsigned char*)"\r\n");
+    uart_display_status();
+}
+        
     }
 }

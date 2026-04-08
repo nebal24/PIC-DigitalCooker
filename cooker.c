@@ -62,27 +62,17 @@
 // Use project enums instead of #define for ON and OFF.
 
 
-
-
-/*
- * File:   cooker.c
- * Author: Lenovo
- *
- * Created on April 7, 2026, 2:46 PM
- */
-
-
 #include <xc.h>
 #include "global.h"
 #include "interrupt_handlers.h"
-#include "lcd.h"
-#include <stdio.h>
+#include "display.h"
 #include "buttons.h"
 #include "delay.h"
 #include "control.h"
 #include "uart.h"
 #include "temperature.h"
 #include "adc.h"
+#include "lcd.h"
 #include "timer0.h"
 
 void setupPorts(void)
@@ -128,39 +118,9 @@ PORTCbits.RC1 = 0;
 
 
 
-
-const char* getModeText(void)
-{
-    switch(mode)
-    {
-        case 0: return "MD:Sec";
-        case 1: return "MD:10Sec";
-        case 2: return "MD:Min";
-        case 3: return "MD:10Min";
-        case 4: return "MD:HR";
-        default: return "MD:Sec";
-    }
-}
-void displayTime(void)
-{
-    unsigned long temp;
-    unsigned int hours, minutes, seconds;
-    char buffer[17];
-
-    temp = cookingTime;
-
-    hours   = temp / 3600;
-    temp    = temp % 3600;
-    minutes = temp / 60;
-    seconds = temp % 60;
-
-    sprintf(buffer, "%01u:%02u:%02u", hours, minutes, seconds);
-
-    lcd_gotoxy(1, 1);
-    lcd_puts(buffer);
-}
 void main(void)
 {
+    // ?? INIT ??????????????????????????
     setupPorts();
     setupINT0();
     setupINT1();
@@ -169,26 +129,24 @@ void main(void)
     lcd_init();
     init_adc();
     setupSerial();
-    
-    SP = 100;
-    CT = 97;
-    cooking_on =1;
 
+    // ?? MAIN LOOP ?????????????????????
     while(1)
     {
         check_cancel_button();
-         uart_handle_commands(); 
+        uart_handle_commands();
         handleIncrementButton();
         handleDecrementButton();
         handleCoolerButton();
 
+        read_SP();
+        read_CT();
+
         displayTime();
+        display_CT_CK();
+        display_SP_HT();
         display_MD_CL(getModeText());
-        
-        //read_SP();       // updates global SP
-        display_SP();    // shows on line 3
-       // read_CT();       // updates global SP
-        display_CT();    // shows on line 3
+
         control_heater();
 
         if (cooking_done_flag)
@@ -196,7 +154,7 @@ void main(void)
             cooking_done_flag = 0;
             beep_buzzer();
         }
-
     }
 }
+
 

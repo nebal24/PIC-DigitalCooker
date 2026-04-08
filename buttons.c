@@ -1,16 +1,8 @@
-/*
- * File:   buttons.c
- * Author: Lenovo
- *
- * Created on April 7, 2026, 2:48 PM
- */
-
-
 
 #include <xc.h>
+#define _XTAL_FREQ 4000000UL 
 #include "global.h"
 #include "delay.h"
-#include "lcd.h"
 #include "control.h"
 unsigned long getModeIncrement(void)
 {
@@ -102,7 +94,7 @@ void handleDecrementButton(void)
                 }
                 else
                 {
-                    cookingTime = 18000;
+                    cookingTime = 0;
                 }
 
                 holdTime = 0;
