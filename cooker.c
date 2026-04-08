@@ -131,30 +131,40 @@ void main(void)
     setupSerial();
 
     // ?? MAIN LOOP ?????????????????????
-    while(1)
-    {
-        check_cancel_button();
-        uart_handle_commands();
-        handleIncrementButton();
-        handleDecrementButton();
-        handleCoolerButton();
 
-        read_SP();
-        read_CT();
+while(1)
+{
+    check_cancel_button();
+    uart_handle_commands();
+    handleIncrementButton();
+    handleDecrementButton();
+    handleCoolerButton();
 
-        displayTime();
-        display_CT_CK();
-        display_SP_HT();
-        display_MD_CL(getModeText());
+    read_SP();
+    read_CT();
 
-        control_heater();
+    displayTime();       
+    display_CT_CK();    
+    display_SP_HT();    
+    display_MD_CL(getModeText()); // ? display first
 
-        if (cooking_done_flag)
-        {
-            cooking_done_flag = 0;
-            beep_buzzer();
-        }
-    }
+    control_heater();
+
+if (cooking_done_flag)
+{
+    cooking_done_flag = 0;
+    
+    // Force display update FIRST before buzzer blocks everything
+    displayTime();
+    display_CT_CK();
+    display_SP_HT();
+    display_MD_CL(getModeText());
+    
+    beep_buzzer();  // now buzzer beeps AFTER screen shows 0:00:00 CK:OFF HT:OFF
+}
+
+}
+    
 }
 
 
